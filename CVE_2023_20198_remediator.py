@@ -74,8 +74,6 @@ def get_devices_from_csv(filename):
 
 
 def main(host):
-    global RESULTS
-    RESULTS[host] = {'vulnerable': []}
     remediate_commands = ["no ip http server", "no ip http secure-server"]  # Remove vulnerable config
 
     # 1. Establish connection to host
@@ -96,8 +94,6 @@ def main(host):
 
 
 if __name__ == '__main__':
-    current_timestamp = time.strftime('%m-%d-%Y-%H_%M')  # USA Date Format
-    RESULTS = {}
     username = input("Enter username: ")
     password = getpass.getpass()
     host_list = get_devices_from_csv(args["devices"])[1:]
