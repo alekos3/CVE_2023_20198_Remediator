@@ -1,10 +1,9 @@
 __author__ = "Alexios Nersessian"
 __email__ = "nersessian@gmail.com"
-__version__ = "v1"
+__version__ = "v1.1"
 
 import argparse
 import getpass
-import time
 from multiprocessing.pool import ThreadPool
 from netmiko import ConnectHandler
 
@@ -74,7 +73,7 @@ def get_devices_from_csv(filename):
 
 
 def main(host):
-    remediate_commands = ["no ip http server", "no ip http secure-server"]  # Remove vulnerable config
+    remediate_commands = ["no ip http server", "no ip http secure-server", "no ip http active-session-modules"]  # Remove vulnerable config
 
     # 1. Establish connection to host
     print(f"- Connecting to {host}.")
@@ -85,11 +84,11 @@ def main(host):
         print(f"- {host}: Failed to connect.")
         return
 
-    print(f"- {host}: Sending no ip http server and no ip http secure-server")
+    print(f"- {host}: Sending no ip http server, no ip http secure-server and no ip http active-session-modules")
     connection.send_configuration(remediate_commands)
     print(f"- {host}: Writing to memory.")
 
-    print(f"{host}: Terminating ssh connection.")
+    print(f"- {host}: Terminating ssh connection.")
     connection.disconnect()
 
 
